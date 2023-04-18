@@ -1,9 +1,13 @@
 CPP = g++
-CPPFLAGS = -lssl -lcrypto -Wall -Wextra -Werror
+CPPFLAGS = -lssl -lcrypto -pthread
 
 EXECUTABLES = server client1 client2 client3 test
 
-all: server client1 client2 client3
+server:
+	$(CPP) -o server server.cpp $(CPPFLAGS)
+
+client1:
+	$(CPP) -o client1 client1.cpp $(CPPFLAGS)
 
 compile:
 	$(CPP) -o server server.cpp $(CPPFLAGS)
