@@ -11,10 +11,8 @@ void client_handler(std::stop_token stoken, int new_socket);
 
 void client_handler(std::stop_token stoken, int new_socket) {
 	while(true) {
-		// char buffer[1024] = { 0 }; MAYBE CHANGE THIS TO STRING??
 		int* recv_flag;
 		int valread;
-		// std::cout << "a" << std::endl;
 		valread = recv(new_socket, recv_flag, sizeof(*(recv_flag)), 0);
 		if((*recv_flag) == 0) {
 			std::cout << "0" << std::endl;
@@ -22,6 +20,16 @@ void client_handler(std::stop_token stoken, int new_socket) {
 			std::cout << "1" << std::endl;
 		}
 		
+	}
+}
+
+void get_user_input(std::stop_token stoken);
+
+void get_user_input(std::stop_token stoken){
+	std::string in;
+	while(true){
+		std::cin >> in;
+		std::cout << in << endl;
 	}
 }
 
@@ -61,6 +69,7 @@ int main(int argc, char const* argv[]) {
 
     // START THREAD FOR USER INPUT
     std::cout << "STARTING USER INPUT THREAD" << std::endl;
+	std::jthread user_input(get_user_input);
     int num_connections = 0;
     int client_sockets[3];
 

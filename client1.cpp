@@ -43,9 +43,13 @@ int main(int argc, char const* argv[]) {
 		if (in.at(0) == 'T') {
 			send_flag = 0;
 			send(client_fd, &send_flag, sizeof(send_flag), 0);
-		} else {
+		} else if (in.at(0) == 'E') {
 			send_flag = 1;
 			send(client_fd, &send_flag, sizeof(send_flag), 0);
+		} else if (in.at(0) == 'W') {
+			sleep(5);
+		} else {
+			std::cout << "Invalid command. Try again." << std::endl;
 		}
     }
 
