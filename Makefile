@@ -1,12 +1,11 @@
 CPP = g++
 CPPFLAGS = -lssl -lcrypto -pthread
+CPPSTD = -std=gnu++20
 
 EXECUTABLES = server client1 client2 client3 test
 
-server:
-	$(CPP) -o server server.cpp $(CPPFLAGS)
-
-client1:
+compile2:
+	$(CPP) $(CPPSTD) -o server server.cpp $(CPPFLAGS)
 	$(CPP) -o client1 client1.cpp $(CPPFLAGS)
 
 compile:

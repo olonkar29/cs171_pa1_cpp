@@ -35,10 +35,18 @@ int main(int argc, char const* argv[]) {
 	}
 
     int valread;
-	char buffer[1024] = { 0 }; //MAYBE CHANGE THIS ONE TO STRING?
-
+	// char buffer[1024] = { 0 }; //MAYBE CHANGE THIS ONE TO STRING?
+	std::string in;
+	int send_flag;
     while (true) {
-
+		std::cin >> in;
+		if (in.at(0) == 'T') {
+			send_flag = 0;
+			send(client_fd, &send_flag, sizeof(send_flag), 0);
+		} else {
+			send_flag = 1;
+			send(client_fd, &send_flag, sizeof(send_flag), 0);
+		}
     }
 
     return 0;

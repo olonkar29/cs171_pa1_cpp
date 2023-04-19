@@ -7,14 +7,21 @@
 #include <thread> 
 #define PORT 9000
 
-void client_handler(int new_socket);
+void client_handler(std::stop_token stoken, int new_socket);
 
-void client_handler(int new_socket) {
+void client_handler(std::stop_token stoken, int new_socket) {
 	while(true) {
 		// char buffer[1024] = { 0 }; MAYBE CHANGE THIS TO STRING??
-		// int valread;
-		// valread = recv(new_socket, buffer, 1024, 0);
-		// std::cout << buffer << std::endl;
+		int* recv_flag;
+		int valread;
+		// std::cout << "a" << std::endl;
+		valread = recv(new_socket, recv_flag, sizeof(*(recv_flag)), 0);
+		if((*recv_flag) == 0) {
+			std::cout << "0" << std::endl;
+		} else {
+			std::cout << "1" << std::endl;
+		}
+		
 	}
 }
 
@@ -65,8 +72,8 @@ int main(int argc, char const* argv[]) {
 			exit(EXIT_FAILURE);
 		}
         client_sockets[num_connections] = new_socket;
-        std::thread client(client_handler, new_socket);
-        client.detach();
+        std::jthread client(client_handler, new_socket);
+        // client.detach();
         num_connections++;
     }
 
