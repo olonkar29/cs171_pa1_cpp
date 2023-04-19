@@ -7,24 +7,41 @@
 #include <thread> 
 #define PORT 9000
 
-void client_handler(std::stop_token stoken, int new_socket);
+void reply_client(std::stop_token stoken, int new_socket, int* recv_flag);
+void reply_client(std::stop_token stoken, int new_socket, int* recv_flag) {
+	if((*recv_flag) == 0) {
+		std::cout << "0" << std::endl;
+		//CLIENT TRANSFER
+		int trans_flag = 0;
+		// Make transaction
+		if(trans_flag == 0) {
+			// Successful transaction
+			send(new_socket, & trans_flag, sizeof(trans_flag), 0);
+		} else {
+			// Failed transaction
+			send(new_socket, & trans_flag, sizeof(trans_flag), 0);
+		}
+		
+	} else {
+		std::cout << "1" << std::endl;
+		//CLIENT EXIT
+	}
+}
 
+void client_handler(std::stop_token stoken, int new_socket);
 void client_handler(std::stop_token stoken, int new_socket) {
 	while(true) {
 		int* recv_flag;
 		int valread;
 		valread = recv(new_socket, recv_flag, sizeof(*(recv_flag)), 0);
-		if((*recv_flag) == 0) {
-			std::cout << "0" << std::endl;
-		} else {
-			std::cout << "1" << std::endl;
-		}
+		std::cout << std::to_string((*recv_flag)) << std::endl;
+		// std::jthread client_replier(reply_client, new_socket, recv_flag);
+		
 		
 	}
 }
 
 void get_user_input(std::stop_token stoken);
-
 void get_user_input(std::stop_token stoken){
 	std::string in;
 	while(true){
@@ -68,7 +85,6 @@ int main(int argc, char const* argv[]) {
 	std::cout << "START BLOCKCHAIN" << std::endl;
 
     // START THREAD FOR USER INPUT
-    std::cout << "STARTING USER INPUT THREAD" << std::endl;
 	std::jthread user_input(get_user_input);
     int num_connections = 0;
     int client_sockets[3];
