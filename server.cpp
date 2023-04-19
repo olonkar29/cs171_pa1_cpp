@@ -29,7 +29,7 @@ void get_user_input(std::stop_token stoken){
 	std::string in;
 	while(true){
 		std::cin >> in;
-		std::cout << in << endl;
+		std::cout << in << std::endl;
 	}
 }
 
