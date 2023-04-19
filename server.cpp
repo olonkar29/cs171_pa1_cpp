@@ -34,10 +34,12 @@ void client_handler(std::stop_token stoken, int new_socket) {
 		int* recv_flag;
 		int valread;
 		valread = recv(new_socket, recv_flag, sizeof(*(recv_flag)), 0);
-		std::cout << std::to_string((*recv_flag)) << std::endl;
+		if(valread>=1) {
+			// std::cout << std::to_string((*recv_flag)) << std::endl;
+			std::jthread client_replier(reply_client, new_socket, recv_flag);
+		}
+		
 		// std::jthread client_replier(reply_client, new_socket, recv_flag);
-		
-		
 	}
 }
 

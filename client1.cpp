@@ -71,7 +71,9 @@ int main(int argc, char const* argv[]) {
 		int valread;
 		int* serv_flag;
 		valread = recv(client_fd, serv_flag, sizeof(*(serv_flag)), 0);
-		std::jthread msg_handler(handle_message, serv_flag);
+		if (valread>=1) {
+			std::jthread msg_handler(handle_message, serv_flag);
+		}
 	}
 	
     return 0;
